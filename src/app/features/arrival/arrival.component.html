@@ -1,0 +1,103 @@
+<div class="container">
+
+    <form class="border rounded p-3" name="addArrivalForm" #addArrivalForm="ngForm" (ngSubmit)="addArrivalForm.form.valid && onSubmit()" novalidate>
+        <div class="row mb-3">
+            <div class="col"><h5><i class="fas fa-user-shield"></i> Admin feature</h5></div>
+            <div class="col">
+                <button type="submit" class="btn btn-primary me-2" [disabled]="!addArrivalForm.valid"><i class="far fa-save"></i> Save</button>
+                <button type="submit" class="btn btn-primary" (click)="clearForm()"><i class="fas fa-broom"></i> Clear</button>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col">
+                <div class="input-group">
+                    <span class="input-group-text" id="add-arrival-input-scheduled">Scheduled</span>
+                    <input type="datetime-local" class="form-control" placeholder="Scheduled" name="scheduled"
+                        aria-label="Scheduled" aria-describedby="add-arrival-input-scheduled" required [(ngModel)]="scheduled">
+                </div>
+            </div>
+            <div class="col">
+                <div class="input-group">
+                    <span class="input-group-text" id="add-arrival-input-status">Status</span>
+                    <select class="form-control" placeholder="Status" name="status"
+                        aria-label="Status" aria-describedby="add-arrival-input-status" required [(ngModel)]="status">
+                        <option value="">Select</option>
+                        <option *ngFor="let status of statuses" [ngValue]="status.id">{{ status.label }}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col">
+                <div class="input-group">
+                    <span class="input-group-text" id="add-arrival-input-origin">Origin</span>
+                    <select class="form-control" placeholder="Origin" name="origin"
+                        aria-label="Origin" aria-describedby="add-arrival-input-origin" required [(ngModel)]="origin">
+                        <option value="">Select</option>
+                        <option *ngFor="let airport of airports" [ngValue]="airport.code">{{ airport.name }} ({{ airport.code }})</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="input-group">
+                    <span class="input-group-text" id="add-arrival-input-revised">Revised</span>
+                    <input type="datetime-local" class="form-control" placeholder="Revised" name="revised"
+                        aria-label="Revised" aria-describedby="add-arrival-input-revised" [(ngModel)]="revised">
+                </div>
+            </div>
+            <div class="col">
+                <div class="input-group">
+                    <span class="input-group-text" id="add-arrival-input-airline">Airline</span>
+                    <select class="form-control" placeholder="Airline" name="airline"
+                        aria-label="Airline" aria-describedby="add-arrival-input-airline" required [(ngModel)]="airline">
+                        <option value="">Select</option>
+                        <option *ngFor="let airline of airlines" [ngValue]="airline.id">{{ airline.name }} (IATA: {{ airline.iata }}) (ICAO: {{ airline.icao }})</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col">
+                <div class="input-group">
+                    <span class="input-group-text" id="add-arrival-input-route">Flight #</span>
+                    <input type="text" class="form-control" placeholder="Flight #" name="route"
+                        aria-label="route" aria-describedby="add-arrival-input-route" required [(ngModel)]="route">
+                </div>
+            </div>
+            <input type="hidden" name="id" [(ngModel)]="id">
+        </div>
+    </form>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Scheduled</th>
+                <th>Status</th>
+                <th>Origin</th>
+                <th>Airline</th>
+                <th>Flight #</th>
+                <th>Actions <i class="fas fa-user-shield"></i></th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- 
+                <option *ngFor="let airline of airlines" [ngValue]="airline.id">{{ airline.name }} (IATA: {{ airline.iata }}) (ICAO: {{ airline.icao }})</option>
+             -->
+            <tr *ngFor="let arrival of arrivals">
+                <td>
+                    <ng-container *ngIf="arrival.revised == null">
+                        {{ arrival.scheduled | date:'short' }}
+                    </ng-container>
+                    <ng-container *ngIf="arrival.revised != null">
+                        <span class="me-3 text-decoration-line-through">{{ arrival.scheduled | date:'short' }}</span><span class="badge text-bg-warning">{{ arrival.revised | date:'short' }}</span>
+                    </ng-container>
+                </td>
+                <td>{{ arrival.status.label }}</td>
+                <td>{{ arrival.origin.name }}</td>
+                <td>{{ arrival.airline.name }}</td>
+                <td>{{ arrival.route }}</td>
+                <td>
+                    <button type="button" class="btn btn-outline-dark btn-sm" (click)="editArrival(arrival.id)"><i class="far fa-edit"></i></button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

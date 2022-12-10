@@ -1,0 +1,54 @@
+<div class="container">
+    <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
+      <a href="/" class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none">
+        <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap"><use xlink:href="#bootstrap"></use></svg>
+      </a>
+  
+      <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
+        <li><a routerLink="/arrivals" class="nav-link px-2 link-dark"><h4><i class="fas fa-plane-arrival"></i> Arrivals</h4></a></li>
+        <li><a routerLink="/departures" class="nav-link px-2 link-dark"><h4><i class="fas fa-plane-departure"></i> Departures</h4></a></li>
+      </ul>
+  
+      <div class="col-md-3 text-end">
+        <button type="button" class="btn btn-warning" *ngIf="!hideLogin"
+          data-bs-toggle="modal" data-bs-target="#loginModal"><i class="fas fa-sign-in-alt"></i> Login</button>
+      </div>
+    </header>
+  </div>
+  
+  <form name="loginForm" #loginForm="ngForm" (ngSubmit)="loginForm.form.valid && onSubmit()" novalidate>
+    <div class="modal fade" id="loginModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="staticBackdropLabel">Login</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div class="row mb-3">
+              <div class="col">
+                <div class="input-group">
+                  <span class="input-group-text" id="login-input-username">Username</span>
+                  <input type="text" class="form-control" placeholder="Username" name="username"
+                    aria-label="Username" aria-describedby="login-input-username" required [(ngModel)]="username">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <div class="input-group">
+                  <span class="input-group-text" id="login-input-password">Password</span>
+                  <input type="password" class="form-control" placeholder="Password" name="password"
+                    aria-label="Password" aria-describedby="login-input-password" required [(ngModel)]="password">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            <button type="submit" class="btn btn-primary" [disabled]="!loginForm.valid">Login</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
