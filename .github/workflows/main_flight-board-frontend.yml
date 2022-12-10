@@ -52,5 +52,5 @@ jobs:
         with:
           app-name: 'flight-board-frontend'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_CADDDA3D995A4345B131893C7F362F76 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_1622A35705264ACDAED0C5573805E0A0 }}
           package: .
