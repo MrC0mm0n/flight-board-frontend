@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { Env } from '../environments/env';
 import { Arrival } from '../model/arrival';
 
 @Injectable({
@@ -8,7 +9,8 @@ import { Arrival } from '../model/arrival';
 })
 export class ArrivalService {
 
-  private baseUrl = "http://localhost:8080/api/arrivals";
+  private api = "/api/arrivals";
+  private baseUrl = Env.domain + this.api;
 
   constructor(private http: HttpClient) { }
 

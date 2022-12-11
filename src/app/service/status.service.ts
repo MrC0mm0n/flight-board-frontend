@@ -1,13 +1,15 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { Env } from '../environments/env';
 
 @Injectable({
   providedIn: 'root'
 })
 export class StatusService {
 
-  private baseUrl = "http://localhost:8080/api/statuses";
+  private api = "/api/statuses";
+  private baseUrl = Env.domain + this.api;
 
   constructor(private http: HttpClient) { }
 
