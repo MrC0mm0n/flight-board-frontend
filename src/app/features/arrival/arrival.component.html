@@ -81,13 +81,17 @@
             <!-- 
                 <option *ngFor="let airline of airlines" [ngValue]="airline.id">{{ airline.name }} (IATA: {{ airline.iata }}) (ICAO: {{ airline.icao }})</option>
              -->
-            <tr *ngFor="let arrival of arrivals">
+            <tr *ngFor="let arrival of arrivals" [ngSwitch]="arrival.status.label">
                 <td>
                     <ng-container *ngIf="arrival.revised == null">
                         {{ arrival.scheduled | date:'short' }}
                     </ng-container>
-                    <ng-container *ngIf="arrival.revised != null">
-                        <span class="me-3 text-decoration-line-through">{{ arrival.scheduled | date:'short' }}</span><span class="badge text-bg-warning">{{ arrival.revised | date:'short' }}</span>
+                    <ng-container *ngIf="arrival.revised != null">                        
+                        <span class="me-3 text-decoration-line-through">{{ arrival.scheduled | date:'short' }}</span>
+                        <span *ngSwitchCase="'CANCELLED'" class="badge text-bg-danger">{{ arrival.revised | date:'short' }}</span>
+                        <span *ngSwitchCase="'EARLY'" class="badge text-bg-success">{{ arrival.revised | date:'short' }}</span>
+                        <span *ngSwitchCase="'ARRIVED'" class="badge text-bg-info">{{ arrival.revised | date:'short' }}</span>
+                        <span *ngSwitchDefault class="badge text-bg-warning">{{ arrival.revised | date:'short' }}</span>
                     </ng-container>
                 </td>
                 <td>{{ arrival.status.label }}</td>
